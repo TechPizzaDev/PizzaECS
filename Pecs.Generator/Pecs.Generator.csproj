@@ -15,8 +15,4 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Include="PecsGenerator - Copy.cs" />
-  </ItemGroup>
-
 </Project>

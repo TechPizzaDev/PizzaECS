@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -73,6 +72,8 @@ namespace Pecs.Generator
                     worldGenericsBlock.AddLine();
 
                     CreateWorldGeneric(genericTypeNames, genericsBlock);
+
+                    CreateWorldGeneric(genericTypeNames);
 
                     builder.Clear();
                     worldGenericsBlock.WriteTo(builder);
@@ -149,6 +150,15 @@ namespace Pecs.Generator
 
             getStoreBlock.AddLine($"return base.GetStore<T>();");
             getComponentBlock.AddLine($"return ref GetStore<T>().GetComponent(entity);");
+        }
+
+        public static void CreateWorldGeneric(List<string> genericTypeNames)
+        {
+            var typeArgumentList = genericTypeNames.Select(name => new IdentifierNameNode(name)).ToImmutableArray<TypeNode>();
+            GenericNameNode worldName = new("World")
+            {
+                TypeArgumentList = typeArgumentList
+            };
         }
     }
 }
