@@ -1,7 +1,7 @@
 ﻿
 namespace Pecs
 {
-    public abstract class Root
+    public abstract class Root<T>
     {
         public nuint EntityToIndex(Entity entity)
         {

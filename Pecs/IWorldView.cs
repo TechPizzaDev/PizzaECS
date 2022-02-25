@@ -2,6 +2,7 @@
 {
     public interface IWorldView
     {
-        ComponentStore<T> GetStore<T>();
+        DataStore<T> GetStore<T>()
+            where T : struct, IElement<T>;
     }
 }

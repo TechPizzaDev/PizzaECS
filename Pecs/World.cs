@@ -6,31 +6,34 @@ namespace Pecs
 {
     public partial class World : IWorldView
     {
-        private Dictionary<Type, ComponentStore> _stores = new();
+        private Dictionary<Type, DataStore> _stores = new();
 
-        public void AddStore<T>(ComponentStore<T> store)
+        public void AddStore<T>(DataStore<T> store)
+            where T : struct, IElement<T>
         {
             _stores.Add(typeof(T), store);
         }
 
-        public virtual ComponentStore<T> GetStore<T>()
+        public virtual DataStore<T> GetStore<T>()
+            where T : struct, IElement<T>
         {
-            if (!_stores.TryGetValue(typeof(T), out ComponentStore store))
+            if (!_stores.TryGetValue(typeof(T), out DataStore store))
             {
-                ComponentStore<T> genericStore = new();
+                DataStore<T> genericStore = new();
                 _stores.Add(typeof(T), genericStore);
                 return genericStore;
             }
-            return Unsafe.As<ComponentStore<T>>(store);
+            return Unsafe.As<DataStore<T>>(store);
         }
 
-        public virtual ref T GetComponent<T>(Entity entity)
+        public virtual T GetComponent<T>(Entity entity)
+            where T : struct, IElement<T>
         {
-            if (_stores.TryGetValue(typeof(T), out ComponentStore store))
+            if (_stores.TryGetValue(typeof(T), out DataStore store))
             {
-                return ref Unsafe.As<ComponentStore<T>>(store).GetComponent(entity);
+                return Unsafe.As<DataStore<T>>(store).Get(entity);
             }
-            return ref Unsafe.NullRef<T>();
+            return default;
         }
     }
 }

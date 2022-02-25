@@ -3,9 +3,9 @@ namespace Pecs
 {
     public readonly struct Entity
     {
-        public uint Id { get; }
+        public ulong Id { get; }
 
-        public Entity(uint id)
+        public Entity(ulong id)
         {
             Id = id;
         }
