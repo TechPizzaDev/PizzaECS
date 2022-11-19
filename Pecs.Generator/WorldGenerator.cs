@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace Pecs.Generator
 {
     [Generator]
-    public class PecsGenerator : IIncrementalGenerator
+    public class WorldGenerator : IIncrementalGenerator
     {
         public const string aggressiveInline = "[MethodImpl(MethodImplOptions.AggressiveInlining)]";
 
